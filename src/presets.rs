@@ -2,6 +2,7 @@ use crate::prelude::*;
 
 #[rex_im]
 mod preset {
+  #![allow(unused_imports)]
   use super::*;
   use crate::event::{
     FromDate, FromStartAndEnd, ProvideSpanComponent, ProvideSpanEndComponent,

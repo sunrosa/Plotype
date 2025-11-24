@@ -1,4 +1,7 @@
-use crate::prelude::*;
+use crate::{
+  event::{HasSpanEnd, HasSpanStart},
+  prelude::*,
+};
 
 #[cgp_comp(ProvideHappenAfterEndDependency)]
 pub trait HasHappenAfterEndDependency {
@@ -47,10 +50,6 @@ pub enum TimeDependency<ID> {
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[cgp_ctx(AfterEndComponents: CgpDefault)]
 pub struct AfterEnd<ID>(pub ID);
-
-impl<ID> AfterEnd<ID> {
-  // pub fn validate(dependency: impl )
-}
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[cgp_ctx(BeforeStartComponents: CgpDefault)]
@@ -120,5 +119,35 @@ where
   type ID = ID;
   fn must_happen_during(&self) -> Self::ID {
     self.0.clone()
+  }
+}
+
+/// Returns [`true`] if `dependent` started after `dependency` ended.
+pub fn validate_after_end<Date: PartialOrd>(
+  dependent: impl HasSpanStart<Date = Date>,
+  dependency: impl HasSpanEnd<Date = Date>,
+) -> bool {
+  dependent.span_start() > dependency.span_end()
+}
+
+mod type_level_test {
+  //! Type-level tests (which fail at compile time)
+  #![cfg(test)]
+  use super::*;
+  use crate::event::{ProvideDate, ProvideDateComponent};
+
+  #[cgp_ctx(PresetTesterComponents: CgpDefault)]
+  struct PresetTester;
+
+  #[cgp_impl(PresetTesterComponents)]
+  impl ProvideDate for PresetTester {
+    type Date = u64;
+    fn date(&self) -> Self::Date {
+      todo!()
+    }
+  }
+
+  fn test() {
+    validate_after_end(PresetTester {}, PresetTester {});
   }
 }

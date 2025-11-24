@@ -60,7 +60,7 @@ where
 #[allow(dead_code)]
 pub struct FromDate<Date>(PD<Date>);
 
-#[cgp_impl(FromStartAndEnd<Date>)]
+#[cgp_impl(FromDate<Date>)]
 impl<S, Date> ProvideSpanStart for S
 where
   S: HasDate<Date = Date>,
@@ -71,7 +71,7 @@ where
   }
 }
 
-#[cgp_impl(FromStartAndEnd<Date>)]
+#[cgp_impl(FromDate<Date>)]
 impl<S, Date> ProvideSpanEnd for S
 where
   S: HasDate<Date = Date>,
