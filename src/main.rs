@@ -30,7 +30,7 @@ mod prelude {
     re_export_imports as rex_im,
   };
 
-  pub(crate) use crate::cgp_default::*;
+  pub(crate) use crate::presets::*;
 }
 
 mod test_prelude {
@@ -47,9 +47,9 @@ mod test_prelude {
   };
 }
 
-mod cgp_default;
 mod dependency;
 mod event;
 mod id;
+mod presets;
 
 fn main() {}

@@ -35,6 +35,7 @@ pub trait HasHappenDuringDependency {
   fn must_happen_during(&self) -> Self::ID;
 }
 
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum TimeDependency<ID> {
   HappenAfterEnd(AfterEnd<ID>),
   HappenBeforeStart(BeforeStart<ID>),
@@ -43,14 +44,27 @@ pub enum TimeDependency<ID> {
   HappenDuring(During<ID>),
 }
 
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[cgp_ctx(AfterEndComponents: CgpDefault)]
 pub struct AfterEnd<ID>(pub ID);
+
+impl<ID> AfterEnd<ID> {
+  // pub fn validate(dependency: impl )
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[cgp_ctx(BeforeStartComponents: CgpDefault)]
 pub struct BeforeStart<ID>(pub ID);
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[cgp_ctx(AfterStartComponents: CgpDefault)]
 pub struct AfterStart<ID>(pub ID);
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[cgp_ctx(BeforeEndComponents: CgpDefault)]
 pub struct BeforeEnd<ID>(pub ID);
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[cgp_ctx(DuringComponents: CgpDefault)]
 pub struct During<ID>(pub ID);
 

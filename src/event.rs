@@ -55,3 +55,29 @@ where
     }
   }
 }
+
+/// Constructs [`HasSpanStart`] and [`HasSpanEnd`] from [`HasDate`]
+#[allow(dead_code)]
+pub struct FromDate<Date>(PD<Date>);
+
+#[cgp_impl(FromStartAndEnd<Date>)]
+impl<S, Date> ProvideSpanStart for S
+where
+  S: HasDate<Date = Date>,
+{
+  type Date = Date;
+  fn span_start(&self) -> Date {
+    self.date()
+  }
+}
+
+#[cgp_impl(FromStartAndEnd<Date>)]
+impl<S, Date> ProvideSpanEnd for S
+where
+  S: HasDate<Date = Date>,
+{
+  type Date = Date;
+  fn span_end(&self) -> Date {
+    self.date()
+  }
+}
