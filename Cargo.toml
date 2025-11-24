@@ -1,0 +1,19 @@
+[package]
+name = "Plotype"
+description = "A type system for creative writing, in order to find plotholes at \"compile-time\""
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+assert_matches = "1.5.0"
+cgp = "0.6.0"
+derive_more = { version = "2.0.1", features = ["add"] }
+itertools = "0.14.0"
+match-downcast = "0.1.2"
+more-asserts = "0.3.1"
+num-traits = { version = "0.2.19", features = ["i128"] }
+thiserror = "2.0.17"
+unwrap-infallible = "0.1.5"
+
+[features]
+doctests = []
