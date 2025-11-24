@@ -44,6 +44,8 @@ mod test_prelude {
   };
 }
 
+mod dependency;
 mod event;
+mod id;
 
 fn main() {}

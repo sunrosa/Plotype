@@ -1,21 +1,12 @@
 use crate::prelude::*;
 
-/// Implementor occurred at a specific date
+/// Implementor occurred at a specific oneshot date
 #[cgp_comp(ProvideDate)]
 pub trait HasDate {
   type Date;
 
   /// The date that the implementor occurred
   fn date(&self) -> Self::Date;
-}
-
-/// Implementor describes the end of a span (such as a character's life)
-#[cgp_comp(ProvideSpanEnd)]
-pub trait HasSpanEnd {
-  type Date;
-
-  /// The date that the implementor's span ended
-  fn span_end(&self) -> Self::Date;
 }
 
 /// Implementor describes the start of a span (such as a character's life)
@@ -27,14 +18,23 @@ pub trait HasSpanStart {
   fn span_start(&self) -> Self::Date;
 }
 
+/// Implementor describes the end of a span (such as a character's life)
+#[cgp_comp(ProvideSpanEnd)]
+pub trait HasSpanEnd {
+  type Date;
+
+  /// The date that the implementor's span ended
+  fn span_end(&self) -> Self::Date;
+}
+
 /// Implementor describes a span (such as a character's life)
 #[cgp_comp(ProvideSpan)]
 pub trait HasSpan {
   type Date;
-  fn span(&self) -> Span<Self::Date>;
+  fn span(&self) -> TimeSpan<Self::Date>;
 }
 
-pub struct Span<Date> {
+pub struct TimeSpan<Date> {
   pub start: Date,
   pub end: Date,
 }
@@ -48,8 +48,8 @@ where
   S: HasSpanStart<Date = Date> + HasSpanEnd<Date = Date>,
 {
   type Date = Date;
-  fn span(&self) -> Span<Self::Date> {
-    Span {
+  fn span(&self) -> TimeSpan<Self::Date> {
+    TimeSpan {
       start: self.span_start(),
       end: self.span_end(),
     }
