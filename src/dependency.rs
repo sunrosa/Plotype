@@ -36,9 +36,75 @@ pub trait HasHappenDuringDependency {
 }
 
 pub enum TimeDependency<ID> {
-  HappenAfterEnd(ID),
-  HappenBeforeStart(ID),
-  HappenAfterStart(ID),
-  HappenBeforeEnd(ID),
-  HappenDuring(ID),
+  HappenAfterEnd(AfterEnd<ID>),
+  HappenBeforeStart(BeforeStart<ID>),
+  HappenAfterStart(AfterStart<ID>),
+  HappenBeforeEnd(BeforeEnd<ID>),
+  HappenDuring(During<ID>),
+}
+
+#[cgp_context]
+pub struct AfterEnd<ID>(ID);
+#[cgp_context]
+pub struct BeforeStart<ID>(ID);
+#[cgp_context]
+pub struct AfterStart<ID>(ID);
+#[cgp_context]
+pub struct BeforeEnd<ID>(ID);
+#[cgp_context]
+pub struct During<ID>(ID);
+
+#[cgp_impl(AfterEndComponents)]
+impl<ID> ProvideHappenAfterEndDependency for AfterEnd<ID>
+where
+  ID: Clone,
+{
+  type ID = ID;
+  fn must_happen_after(&self) -> Self::ID {
+    self.0.clone()
+  }
+}
+
+#[cgp_impl(BeforeStartComponents)]
+impl<ID> ProvideHappenBeforeStartDependency for BeforeStart<ID>
+where
+  ID: Clone,
+{
+  type ID = ID;
+  fn must_happen_before(&self) -> Self::ID {
+    self.0.clone()
+  }
+}
+
+#[cgp_impl(AfterStartComponents)]
+impl<ID> ProvideHappenAfterStartDependency for AfterStart<ID>
+where
+  ID: Clone,
+{
+  type ID = ID;
+  fn must_happen_after_start(&self) -> Self::ID {
+    self.0.clone()
+  }
+}
+
+#[cgp_impl(BeforeEndComponents)]
+impl<ID> ProvideHappenBeforeEndDependency for BeforeEnd<ID>
+where
+  ID: Clone,
+{
+  type ID = ID;
+  fn must_happen_before_end(&self) -> Self::ID {
+    self.0.clone()
+  }
+}
+
+#[cgp_impl(DuringComponents)]
+impl<ID> ProvideHappenDuringDependency for During<ID>
+where
+  ID: Clone,
+{
+  type ID = ID;
+  fn must_happen_during(&self) -> Self::ID {
+    self.0.clone()
+  }
 }
