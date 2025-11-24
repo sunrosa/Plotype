@@ -25,9 +25,12 @@ mod prelude {
 
   pub(crate) use cgp::prelude::{
     CanUseComponent, DelegateComponent, IsProviderFor, Life, UseContext, UseDelegate, UseType,
-    cgp_component as cgp_comp, cgp_context, cgp_impl, delegate_and_check_components as del_check,
-    delegate_components as del,
+    cgp_component as cgp_comp, cgp_context as cgp_ctx, cgp_impl, cgp_preset as cgp_pre,
+    delegate_and_check_components as del_check, delegate_components as del,
+    re_export_imports as rex_im,
   };
+
+  pub(crate) use crate::cgp_default::*;
 }
 
 mod test_prelude {
@@ -44,6 +47,7 @@ mod test_prelude {
   };
 }
 
+mod cgp_default;
 mod dependency;
 mod event;
 mod id;

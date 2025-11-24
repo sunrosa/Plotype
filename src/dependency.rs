@@ -43,16 +43,16 @@ pub enum TimeDependency<ID> {
   HappenDuring(During<ID>),
 }
 
-#[cgp_context]
-pub struct AfterEnd<ID>(ID);
-#[cgp_context]
-pub struct BeforeStart<ID>(ID);
-#[cgp_context]
-pub struct AfterStart<ID>(ID);
-#[cgp_context]
-pub struct BeforeEnd<ID>(ID);
-#[cgp_context]
-pub struct During<ID>(ID);
+#[cgp_ctx(AfterEndComponents: CgpDefault)]
+pub struct AfterEnd<ID>(pub ID);
+#[cgp_ctx(BeforeStartComponents: CgpDefault)]
+pub struct BeforeStart<ID>(pub ID);
+#[cgp_ctx(AfterStartComponents: CgpDefault)]
+pub struct AfterStart<ID>(pub ID);
+#[cgp_ctx(BeforeEndComponents: CgpDefault)]
+pub struct BeforeEnd<ID>(pub ID);
+#[cgp_ctx(DuringComponents: CgpDefault)]
+pub struct During<ID>(pub ID);
 
 #[cgp_impl(AfterEndComponents)]
 impl<ID> ProvideHappenAfterEndDependency for AfterEnd<ID>
