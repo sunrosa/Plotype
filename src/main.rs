@@ -19,6 +19,8 @@ mod prelude {
   #![allow(unused_imports)]
   #![doc(hidden)]
 
+  pub(crate) use core::marker::PhantomData as PD;
+
   pub(crate) use thiserror::Error as ThisError;
 
   pub(crate) use cgp::prelude::{
